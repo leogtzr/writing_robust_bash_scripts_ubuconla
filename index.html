@@ -117,9 +117,124 @@ exit 0
 					</pre>
 				</section>
 
+				<section>
+					<pre>
+						<code>
+set -o unset
+						</code>
+					</pre>
+
+
+					<pre>
+							<code>
+#!/bin/bash
+set -o nounset
+rm -rf "$STEAMROOT"/* 
+exit 0
+							</code>
+					</pre>
+
+					<pre>
+							<code>
+#!/bin/bash
+"${STEAMROOT:?"is not defined 😞"}"
+rm -rf "$STEAMROOT"/*
+exit 0
+							</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Fail fast with</h2>
+					<p>
+						set -e
+					</p>
+					<i>or:</i>
+					<p>
+						set -o errexit
+					</p>
+					<p class="fragment">
+						Example: ...
+					</p>
+				</section>
+
+				<section>
+					<pre>
+						<code>
+#!/bin/bash
+set -o errexit
+cp "notfound" "x"
+# something important with x file
+# ...
+exit
+						</code>
+					</pre>
+					You can disable the behaviour with
+					<p>
+						set +o errexit
+					</p>
+					<p>
+						set +e
+					</p>
+					Or:
+					<pre>
+						<code>
+cp "notfound" "hello.txt" || true
+
+cp "notfound" "hello.txt" || :
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code>
+#!/bin/bash
+set -o errexit
+# Critical code
+
+# Disable error checking for
+# non-critical code
+set +o errexit
+cp a b 
+echo "Hello ... "
+
+# When we are done ...
+set -o errexit
+
+echo "World"
+exit 0
+						</code>
+					</pre>
+				</section>
 
 <!-- Version control -->
 
+				<section>
+					<h2>Choose a shebang carefully #!/...</h2>
+				</section>
+
+				<section>
+					<section>
+						<p>#!/bin/bash</p>
+						<p></p>
+						<p>is totally different than #!/bin/sh in some systems</p>
+					</section>
+					<pre>
+<code>
+$ which bash
+/bin/bash
+$ which sh
+/bin/sh
+$ ls -larth $(which sh)
+lrwxrwxrwx 1 root root 4 sep 26 23:54 /bin/sh -> dash
+</code>
+					</pre>
+				</section>
+
+				<section>
+If you are coding in <i><b>bash</b></i> then use the <b>bash</b> shebang 😎
+				</section>
 
 <!-- Summary -->
 				<section>
