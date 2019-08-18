@@ -234,6 +234,78 @@ lrwxrwxrwx 1 root root 4 sep 26 23:54 /bin/sh -> dash
 
 				<section>
 If you are coding in <i><b>bash</b></i> then use the <b>bash</b> shebang 😎
+
+<pre>
+	<code>
+			   #!/bin/bash
+	</code>
+</pre>
+				</section>
+
+				<section>
+					<p class="fragment_">
+							Do not run your scripts with "sh scriptname" (unless your want to ... )
+					</p>
+
+					<pre>
+						<code>
+#!/bin/bash
+x=1
+((x++))
+echo "x: ${x}"
+		
+exit 0
+						</code>
+					</pre>
+
+					Let's try to run it with "sh scriptname":
+				</section>
+
+				<section>
+<pre>
+	<code>
+0 [16:43]leo@lein ~/wrbsu/src $ sh extensions.sh 
+extensions.sh: 3: extensions.sh: x++: not found
+x: 1
+	</code>
+</pre>
+
+				<p>/bin/sh is not always pointing to the bash binary.</p>
+				</section>
+
+				<section>
+If you want to create a POSIX script use 'checkbashisms' (devscripts package) script to check your script for <i>bashisms</i>:
+
+<pre>
+	<code>
+#!/bin/sh
+
+x=1
+((x++))
+echo "x: ${x}"
+
+exit 0
+	</code>
+</pre>
+
+<pre>
+	<code>
+possible bashism in bashism.sh line 4 ('((' should be '$(('):
+((x++))
+	</code>
+</pre>
+				</section>
+				
+				<section>
+					Use ${var} instead of $var whenever you can
+
+<pre>
+	<code>
+/lib/$ENV_app vs. /lib/${ENV}_app
+	</code>
+</pre>
+
+It is one of the most common mistakes ... (also use set -o nounset)
 				</section>
 
 <!-- Summary -->
