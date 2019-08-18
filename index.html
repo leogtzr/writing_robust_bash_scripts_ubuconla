@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+    <!-- Metadata to edit -->
+		<title>Writing Robust Bash Scripts</title>
+		<meta name="author" content="Leonardo Gutiérrez">
+    <!-- /Metadata to edit -->
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+        <!-- Title slide -->
+				<section>
+					<h1>Writing Robust Bash Scripts</h1>
+					<p>
+						Leonardo Gutiérrez 🦁
+					</p>
+					<p class="fragment"><ul>
+						<li>Twitter: <i>@leonidasgtzr</i></li>
+						<li>Github: @leogtzr</li>
+						<li>E-mail: <i>leogutierrezramirez@gmail.com</i></li>
+				</ul></p>
+					<aside class="notes">
+            Some notes here
+					</aside>
+				</section>
+
+
+<!-- Overview -->
+				<section>
+					<h1>What can go wrong here?</h1>
+					<pre>
+						<code>
+rm -rf "$STEAMROOT/"*
+						</code>
+					</pre>
+					<p>
+						https://github.com/ValveSoftware/steam-for-linux/issues/3671
+					</p>
+					<aside class="notes">
+					</aside>
+				</section>
+
+				<section>
+					<h1>Or here ... </h1>
+					<code>
+						cp -r "$LOGS"/* /some_dir/logs
+					</code>
+
+					<p class="fragment">
+						<h4>A cool disk space issue 😀</h4>
+					</p>
+				</section>
+
+				<section>
+					<p class="fragment">
+						<pre>
+							<code>
+#!/bin/bash                
+# Don't run it please ...  
+rm -rf "$STEAMROOT"/*      
+exit 0
+							</code>
+						</pre>
+					</p>
+
+					WARNING: If you run this code (as root) your files will be gone!
+ 
+					 Run it safely, replace the rm with an echo ...
+					 <aside class="notes">
+						 Run this code.
+					 </aside>
+				</section>
+
+				<section>
+					<pre>
+						<code>
+< How do we fix it? >        
+-------------------         
+    \  ^___^             
+     \ (ooo)\_______     
+       (___)\       )\/\ 
+             ||----w |    
+             ||     ||
+						</code>
+					</pre>
+				</section>
+
+
+<!-- Version control -->
+
+
+<!-- Summary -->
+				<section>
+					<h1>Summary</h1>
+					<p class="fragment"><ul>
+							<li>abc1</li>
+							<li>abc2</li>
+							<li>abc3</li>
+							<li>abc4</li>
+							<li>abc5</li>
+							<li>abc6</li>
+							<li>abc7</li>
+					</ul></p>
+					<aside class="notes">
+					</aside>
+				</section>
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
+
