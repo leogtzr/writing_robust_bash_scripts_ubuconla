@@ -442,6 +442,58 @@ exit 0
 			</section>
 		</section>
 
+		<section>
+			<pre>
+				<code>
+0 [21:48]leo@lein ~ $ mail
+"/var/mail/leo": 1 message 1 unread
+>U   1 Cron Daemon        dom ago 18 21:29  22/735   Cron &lt;leo@lein&gt; /path/remover.sh
+? 
+				</code>
+			</pre>
+
+			<pre>
+				<code>
+? 1
+Return-Path: &lt;leo@lein.lan&gt;
+X-Original-To: leo
+Delivered-To: leo@lein.lan
+Received: by lein.lan (Postfix, from userid 1000)
+	id 57E814A033B; Sun, 18 Aug 2019 21:29:01 -0600 (MDT)
+From: root@lein.lan (Cron Daemon)
+To: leo@lein.lan
+Subject: Cron &lt;leo@lein&gt; /path/remover.sh
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Cron-Env: &lt;SHELL=/bin/sh&gt;
+X-Cron-Env: &lt;HOME=/home/leo&gt;
+X-Cron-Env: &lt;PATH=/usr/bin:/bin&gt;
+X-Cron-Env: &lt;LOGNAME=leo&gt;
+Message-Id: &lt;20190819032901.57E814A033B@lein.lan&gt;
+Date: Sun, 18 Aug 2019 21:29:01 -0600 (MDT)
+X-IMAPbase: 1566186481 2
+Status: O
+X-UID: 1
+
+rm: cannot remove '/tmp/doesnotexist.sh': No such file or directory
+?
+				</code>
+			</pre>
+		</section>
+
+		<section>
+			<p class="fragment">Solution?</p>
+			<p class="fragment">Handle redirection properly ... </p>
+
+			
+<pre>
+<p class="fragment">					
+* * * * * /path/remover.sh > /path/remover.log 2>&1
+</p>
+</pre>
+		</section>
+
 <!-- Summary -->
 				<section>
 					<h1>Summary</h1>
