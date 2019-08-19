@@ -499,7 +499,7 @@ or:
 			<h2>Exit your scripts with an explicit exit (n>0) on any non-normal exit.</h2>
 			<pre>
 			<p class="fragment">
-
+				Example:
 	<code>
 readonly conf_file_not_found=81
 
@@ -519,11 +519,39 @@ fi
 		</section>
 
 		<section>
-			<h2>Best practices ... </h2>
+			<h3>Cleaning up resources with the trap command</h3>
+<pre>
+#!/bin/bash
+clean() {
+    echo "Cleaning temporary files!"
+    echo "Done"
+    trap - INT TERM EXIT
+    exit 0
+}                                    
+
+trap 'clean' EXIT SIGINT SIGTERM
+
+echo "I am done ... "
+sleep 30s
+
+exit 0
+</pre>
+		</section>
+
+		<section>
+			<h2>Some best practices ... </h2>
+			<p class="fragment">
+				<ul>
+					<li>- Word Splitting (always double quote your variables!)</li>
+					<li>- Code your script with long options when you are not in the command line (terminal)</li>
+					<li>- Use $(...) instead of `...`</li>
+					<li>- https://www.shellcheck.net <:)</li>
+				</ul>
+			</p>
 		</section>
 
 <!-- Summary -->
-				<section>
+				<!-- <section>
 					<h1>Summary</h1>
 					<p class="fragment_"><ul>
 							<li>abc1</li>
@@ -536,7 +564,7 @@ fi
 					</ul></p>
 					<aside class="notes">
 					</aside>
-				</section>
+				</section> -->
 
 				<section>
 					<h2>Q / A</h2>
