@@ -494,6 +494,29 @@ rm: cannot remove '/tmp/doesnotexist.sh': No such file or directory
 </pre>
 		</section>
 
+		<section>
+			<h2>Exit your scripts with an explicit exit (n>0) on any non-normal exit.</h2>
+			<pre>
+			<p class="fragment">
+
+	<code>
+readonly conf_file_not_found=81
+
+if [[ ! -f "${conf_file}" ]]; then
+    # log, mail or send a notification
+    exit ${conf_file_not_found}
+fi
+	</code>
+
+			</p>
+		</pre>
+
+		<p class="fragment">
+			Just imagine how painful would be to find out that your critical job has been failing for two months ...
+		</p>
+
+		</section>
+
 <!-- Summary -->
 				<section>
 					<h1>Summary</h1>
