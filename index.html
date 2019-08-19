@@ -370,12 +370,82 @@ some_function
 echo "value: ${i}"
 				</code>
 			</pre>
+			Let's fix it ...
+		</section>
+
+		<section>
+			<pre>
+				<code>
+some_function() {                  
+    local i 
+    for ((i = 0; i < 10; i++)); do
+        printf "Value: %d\n" "${i}"
+    done
+}                                  
+								
+some_function
+# i variable is still set here.
+echo "value: ${i}"
+				</code>
+			</pre>
+		</section>
+
+		<section>
+			<h2>&& with || should be used carefully</h2>
+			<pre>
+				<code>
+cp "${0}" "${0}.bkp" && {
+    echo "Backup created successfully ... "
+    . "file_does_not_exist"
+} || {
+    echo "Error creating backup ... " >&2
+    exit 80
+}
+				</code>
+			</pre>
+
+			Let's fix it ... 
+
+			<aside class="notes">
+				https://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators
+			</aside>
+		</section>
+
+		<section>
+			<pre>
+				<code>
+if cp "${0}" "${0}.bkp"; then
+    echo "Backup created successfully ... "
+    . "file_does_not_exist"
+else
+    echo "Error creating backup ... " >&2
+    exit 80
+fi
+				</code>
+			</pre>
+		</section>
+
+		<section>
+			<h2>cron jobs: "silence is golden" 🤫</h2>
+
+			<section>
+				<p>What is wrong with the following code?</p>
+				<pre>* * * * * /path/remover.sh                          # crontab -l</pre>
+
+				<i>remover.sh</i> content:
+				<pre>
+#!/bin/bash
+rm "/tmp/doesnotexist.sh"
+exit 0
+					</pre>
+					Let's run it 😌 ...
+			</section>
 		</section>
 
 <!-- Summary -->
 				<section>
 					<h1>Summary</h1>
-					<p class="fragment"><ul>
+					<p class="fragment_"><ul>
 							<li>abc1</li>
 							<li>abc2</li>
 							<li>abc3</li>
@@ -388,6 +458,12 @@ echo "value: ${i}"
 					</aside>
 				</section>
 
+				<section>
+					<h2>Q / A</h2>
+					<p>
+						<img src="img/qa.png" />
+					</p>
+				</section>
 
 			</div>
 		</div>
@@ -403,7 +479,7 @@ echo "value: ${i}"
 				controls: true,
 				progress: true,
 				history: true,
-				center: true,
+				center: false,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
