@@ -215,11 +215,8 @@ exit 0
 				</section>
 
 				<section>
-					<section>
 						<p>#!/bin/bash</p>
-						<p></p>
 						<p>is totally different than #!/bin/sh in some systems</p>
-					</section>
 					<pre>
 <code>
 $ which bash
@@ -314,12 +311,12 @@ It is one of the most common mistakes ... (also use set -o nounset)
 					<pre>
 							<code class="hljs" data-line-numbers="2-4">
 sort 'notfound | uniq && {
-	echo "Life is good :)"      
+    echo "Life is good :)"      
 }
 
 #!/bin/bash
 if sort "notfound" | uniq; then
-	echo "Life is good" 
+    echo "Life is good" 
 fi         
 
 exit 0
@@ -345,10 +342,10 @@ Solution:
 #!/bin/bash
 set -o pipefail
 if sort "notfound" | uniq; then
-	echo "Life is good" 
+    echo "Life is good" 
 fi         
 
-exit 0			
+exit
 	</code>
 </pre>
 				</section>
@@ -484,13 +481,17 @@ rm: cannot remove '/tmp/doesnotexist.sh': No such file or directory
 
 		<section>
 			<p class="fragment">Solution?</p>
-			<p class="fragment">Handle redirection properly ... </p>
-
-			
-<pre>
-<p class="fragment">					
+			<p class="fragment">Handle redirection properly ... </p>			
+			<pre>
+<p class="fragment">
 * * * * * /path/remover.sh > /path/remover.log 2>&1
 </p>
+</pre>
+or:
+<pre>
+	rm "/tmp/doesnotexist.sh" 2> "/path/log.log"
+	# or:
+	rm "/tmp/doesnotexist.sh" > "/path/log.log" 2>&1
 </pre>
 		</section>
 
