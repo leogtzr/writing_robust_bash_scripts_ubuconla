@@ -308,6 +308,70 @@ possible bashism in bashism.sh line 4 ('((' should be '$(('):
 It is one of the most common mistakes ... (also use set -o nounset)
 				</section>
 
+				<section>
+					Use set -o pipefail
+
+					<pre>
+							<code class="hljs" data-line-numbers="2-4">
+sort 'notfound | uniq && {
+	echo "Life is good :)"      
+}
+
+#!/bin/bash
+if sort "notfound" | uniq; then
+	echo "Life is good" 
+fi         
+
+exit 0
+						</code>
+					</pre>
+
+					What will be the output?
+				</section>
+
+				<section>
+	<pre>
+		<code>
+sort: cannot read: notfound: No such file or directory
+Life is good
+		</code>
+</pre>
+Solution:
+				</section>
+
+				<section>
+<pre>
+	<code>
+#!/bin/bash
+set -o pipefail
+if sort "notfound" | uniq; then
+	echo "Life is good" 
+fi         
+
+exit 0			
+	</code>
+</pre>
+				</section>
+
+		<section>
+			Use <b><i>local</i></b> for variables within functions.
+			<p>Variables in <i>bash</i> have global <i>scope</i>.</p>
+
+			<pre>
+				<code>
+some_function() {
+    for ((i = 0; i < 10; i++)); do
+        printf "Value: %d\n" ${i}
+    done
+}
+                                
+some_function
+# i variable is still set here.
+echo "value: ${i}"
+				</code>
+			</pre>
+		</section>
+
 <!-- Summary -->
 				<section>
 					<h1>Summary</h1>
